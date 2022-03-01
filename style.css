@@ -1,0 +1,12 @@
+h1 {
+    display: flex;
+    justify-content: center;
+}
+
+.mobilepi {
+    color: green;
+}
+
+.com {
+    color: orange;
+}
