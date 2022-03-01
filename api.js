@@ -1,22 +1,24 @@
+// Search by textfield
 const searchphones = () => {
-    const text = document.getElementById('box-search');
-    const url = `https://openapi.programming-hero.com/api/phones?search=${text.value.toLowerCase()}`
-    fetch(url)
-        .then(res => res.json())
-        .then(data => showresult(data.data, text))
-}
-const showresult = (phones, text) => {
-    const body = document.getElementsByClassName('card-group')[0];
-    body.textContent = ''
-    text.value = ''
-    document.getElementById('details').textContent = ''
-    if (phones.length == 0) {
-        alert('no results found')
+        const text = document.getElementById('box-search');
+        const url = `https://openapi.programming-hero.com/api/phones?search=${text.value.toLowerCase()}`
+        fetch(url)
+            .then(res => res.json())
+            .then(data => showresult(data.data, text))
     }
-    const phones20 = phones.slice(0, 20)
-    phones20.forEach(phone => {
-        const div = document.createElement('div')
-        div.innerHTML = `<div class="card bg-primary p-2 text-dark bg-opacity-10">
+    // Showing result for search value
+const showresult = (phones, text) => {
+        const body = document.getElementsByClassName('card-group')[0];
+        body.textContent = ''
+        text.value = ''
+        document.getElementById('details').textContent = ''
+        if (phones.length == 0) {
+            alert('no results found')
+        }
+        const phones20 = phones.slice(0, 20)
+        phones20.forEach(phone => {
+            const div = document.createElement('div')
+            div.innerHTML = `<div class="card bg-primary p-2 text-dark bg-opacity-10">
         <img  src="${phone.image}" class="card-img-top w-50 mx-auto" alt="...">
         <div class="card-body">
             <h5 class="card-title"><strong>${phone.phone_name}</strong></h5>
@@ -24,16 +26,18 @@ const showresult = (phones, text) => {
             <button type="button" class="btn btn-primary px-5 container"onclick="seemore('${phone.slug}')">See More</button>
         </div>
     </div>`
-        body.appendChild(div)
-        console.log(phone)
-    });
-}
+            body.appendChild(div)
+            console.log(phone)
+        });
+    }
+    // Select a phone
 const seemore = (value) => {
-    const url = `https://openapi.programming-hero.com/api/phone/${value}`
-    fetch(url)
-        .then(res => res.json())
-        .then(data => showmore(data.data))
-}
+        const url = `https://openapi.programming-hero.com/api/phone/${value}`
+        fetch(url)
+            .then(res => res.json())
+            .then(data => showmore(data.data))
+    }
+    // Showing details of a specific phone
 const showmore = phone => {
     console.log(phone)
     const result = document.getElementById('details')
