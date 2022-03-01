@@ -10,12 +10,12 @@ const showresult = (phones, text) => {
     const body = document.getElementsByClassName('card-group')[0];
     body.textContent = ''
     text.value = ''
+    document.getElementById('details').textContent = ''
     if (phones.length == 0) {
         alert('no results found')
 
     }
-    for (const phone of phones) {
-
+    phones.forEach(phone => {
         const div = document.createElement('div')
         div.innerHTML = `<div class="card bg-primary p-2 text-dark bg-opacity-10">
         <img  src="${phone.image}" class="card-img-top w-50 mx-auto" alt="...">
@@ -30,7 +30,7 @@ const showresult = (phones, text) => {
 
 
         console.log(phone)
-    }
+    });
 }
 const seemore = (value) => {
     const url = `https://openapi.programming-hero.com/api/phone/${value}`
@@ -44,17 +44,23 @@ const showmore = phone => {
     const result = document.getElementById('details')
     result.textContent = ''
     const div = document.createElement('div')
-    document.getElementById
-        // {"mainFeatures":{"storage":"128GB/256GB/1TB storage, no card slot","displaySize":"6.7 inches, 109.8 cm2 (~87.4% screen-to-body ratio)","chipSet":"Apple A15 Bionic (5 nm)","memory":"128GB 6GB RAM, 256GB 6GB RAM, 512GB 6GB RAM, 1TB 6GB RAM","sensors":["Face ID","accelerometer","gyro","proximity","compass","barometer"]},
+    for (const [key, value] of Object.entries(phone.others)) {
+        console.log(`${key} : ${value}`);
+    }
+    for (sensor of phone.mainFeatures.sensors)
+        console.log(sensor)
     if (phone.mainFeatures.memory == undefined)
         phone.mainFeatures.memory = 'unknown'
     if (phone.mainFeatures.chipSet == undefined)
         phone.mainFeatures.chipSet = 'unknown'
+    if (phone.mainFeatures.displaySize == undefined)
+        phone.mainFeatures.displaySize = 'unknown'
+    if (phone.releaseDate == undefined)
+        phone.releaseDate = 'Unknown release date'
     div.innerHTML = `<div class="card  w-75 mx-auto bg-success p-2 text-dark bg-opacity-10">
     <img src="${phone.image}" class="card-img-top w-25" alt="...">
     <div class="card-body">
-    <h5 class="card-title"><strong>${phone.name}</strong></h5>
-        <p class="card-text"><strong>Features</strong><br>Memory: ${phone.mainFeatures.memory}<br>Display: ${phone.mainFeatures.displaySize}<br>Chipset: ${phone.mainFeatures.chipSet}<br></p>
+        <p class="card-text"><strong>Features</strong><br>Memory: ${phone.mainFeatures.memory}<br>Display: ${phone.mainFeatures.displaySize}<br>Chipset: ${phone.mainFeatures.chipSet}<br>${phone.releaseDate}</p>
     </div>
 </div>`
     result.appendChild(div)
